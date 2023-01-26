@@ -81,14 +81,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // with Dio
     var response =
-        await Dio().get('https://jsonplaceholder.typicode.com/users/1');
-    var jsonMapObject = response.data;
+        await Dio().get('https://jsonplaceholder.typicode.com/users');
+    // var jsonMapObject = response.data;
     // print(jsonMapObject.runtimeType);
-    var user = User.fromMapJson(jsonMapObject);
+    // var user = User.fromMapJson(jsonMapObject);
+
+    List<User> userList = response.data
+        .map<User>((jsonMapObject) => User.fromMapJson(jsonMapObject))
+        .toList();
+    // .cast<User>();
 
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => UserProfileScreen(userData: user),
+        builder: (context) => UserProfileScreen(userData: userList),
       ),
     );
 
